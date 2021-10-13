@@ -41,7 +41,7 @@ def test_get_longest_all_not_prime():
 def get_longest_all_not_prime(lista):
     '''
     Afiseaza subsecventa cu numere prime
-    :param lista:
+    :param lista:lista cu numere prime
     :return:
     '''
     subsecventa_finala = []
@@ -61,6 +61,11 @@ def get_longest_all_not_prime(lista):
 
 
 def verificare_cifre_prime(num):
+    '''
+    Toate numerele sunt formate din cifre prime.
+    :param num: int numbers
+    :return: False or True
+    '''
     str_nr = str(num)
     for cifre in range(0, len(str_nr)):
         cifra_verificare = int(str_nr[cifre])
@@ -118,9 +123,38 @@ def test_get_longest_prime_digits():
 def citire_lista():
     lista = [int(el) for el in input('Introduceti elementele separate prin spatiu: ').split(' ')]
     return lista
+def get_longest_div_k(lst, k):
+    '''
+    Toate numerele sunt divizibile cu k (citit).
+    :param lst:list with int elem
+    :param k:int k
+    :return:
+    '''
+    cea_mai_lunga_secventa = []
+    secventa_actuala = []
+    k = int(k)
+    i = 0
+    while i < len(lst):
+        if int(lst[i]) % k == 0:
+            secventa_actuala.append(lst[i])
+            i+=1
+        else:
+            if len(secventa_actuala) > len(cea_mai_lunga_secventa):
+                cea_mai_lunga_secventa = secventa_actuala.copy()
+            secventa_actuala.clear()
+            i+=1
+    if len(secventa_actuala) > len(cea_mai_lunga_secventa):
+        cea_mai_lunga_secventa = secventa_actuala.copy()
+    return cea_mai_lunga_secventa
 
+def test_get_longest_div_k():
+    assert get_longest_div_k([2, 4, 13,3, 23], 2) ==[2, 4]
 
+test_get_longest_div_k()
 
+def citire_k_formare_secventa(lst):
+    k = int(input('Introduceti numarul: '))
+    print(get_longest_div_k(lst, k))
 
 def meniul_programului():
     test_get_longest_all_not_prime()
@@ -130,12 +164,12 @@ def meniul_programului():
 
 
     enter = []
-
     while True:
         print('''
         1. Citire lista
-        2.Toate numerele sunt neprime.
-        3.Toate numerele sunt formate din cifre prime.
+        2.Cea mai lunga subsecventa cu proprietatea:Toate numerele sunt neprime.
+        3.Cea mai lunga sbsecventa cu proprietatea:Toate numerele sunt formate din cifre prime.
+        4.Toate numerele sunt divizibile cu k (citit).
         x.Iesire''')
         cmd = input('Comanda: ')
 
@@ -146,9 +180,21 @@ def meniul_programului():
             print(get_longest_all_not_prime(enter))
         elif cmd == '3':
             print(get_longest_prime_digits(enter))
+        elif cmd=='4':
+            k=int(input("citeste k:"))
+            print(get_longest_div_k(enter,k))
         elif cmd == 'x':
             break
 
     pass
 
 meniul_programului()
+
+def teste():
+    test_get_longest_all_not_prime()
+    test_verificare_cifre_prime()
+    test_get_longest_prime_digits()
+    test_get_longest_div_k()
+
+teste()
+
